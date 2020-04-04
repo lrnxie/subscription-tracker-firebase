@@ -20,7 +20,7 @@ const SubscriptionList = () => {
       </ListGroup>
     </div>
   ) : (
-    <div>No subscriptions. Add one to start tracking!</div>
+    <div className="no-subs">No subscriptions. Add one to start tracking!</div>
   );
 };
 

@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
+import { SubscriptionContext } from "../contexts/SubscriptionContext";
+
 import { ListGroupItem, Container, Row, Col, Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 const SubscriptionDetail = ({ subscription }) => {
+  const { removeSubscription } = useContext(SubscriptionContext);
+
   return (
     <ListGroupItem>
       <Container>
@@ -15,7 +19,11 @@ const SubscriptionDetail = ({ subscription }) => {
             <Button color="info" className="edit">
               <FontAwesomeIcon icon={faEdit} />
             </Button>
-            <Button color="info" className="delete">
+            <Button
+              color="info"
+              className="delete"
+              onClick={() => removeSubscription(subscription.id)}
+            >
               <FontAwesomeIcon icon={faTrashAlt} />
             </Button>
           </Col>

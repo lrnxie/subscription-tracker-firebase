@@ -14,8 +14,16 @@ export const SubscriptionContextProvider = props => {
     setSubscription([...subscriptions, { id: uuidv1(), name, price, cycle }]);
   };
 
+  const removeSubscription = id => {
+    setSubscription(
+      subscriptions.filter(subscription => subscription.id !== id)
+    );
+  };
+
   return (
-    <SubscriptionContext.Provider value={{ subscriptions, addSubscription }}>
+    <SubscriptionContext.Provider
+      value={{ subscriptions, addSubscription, removeSubscription }}
+    >
       {props.children}
     </SubscriptionContext.Provider>
   );
