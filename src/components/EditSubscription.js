@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { SubscriptionContext } from "../contexts/SubscriptionContext";
+
 import {
   Button,
   Form,
@@ -11,24 +12,23 @@ import {
   ModalBody
 } from "reactstrap";
 
-const NewSubscription = props => {
-  const { addSubscription } = useContext(SubscriptionContext);
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [cycle, setCycle] = useState("weekly");
+const EditSubscription = props => {
+  const { editSubscription } = useContext(SubscriptionContext);
+  const [name, setName] = useState(props.subscription.name);
+  const [price, setPrice] = useState(props.subscription.price);
+  const [cycle, setCycle] = useState(props.subscription.cycle);
 
   const handleSubmit = e => {
     e.preventDefault();
-    addSubscription(name, price, cycle);
-    setName("");
-    setPrice("");
-    setCycle("weekly");
+
+    const updatedDetails = { id: props.subscription.id, name, price, cycle };
+    editSubscription(props.subscription.id, updatedDetails);
     props.toggle();
   };
 
   return (
     <Modal isOpen={props.modal} toggle={props.toggle}>
-      <ModalHeader toggle={props.toggle}>Add new subscription</ModalHeader>
+      <ModalHeader toggle={props.toggle}>Edit subscription</ModalHeader>
       <ModalBody>
         <Form onSubmit={handleSubmit}>
           <FormGroup>
@@ -67,7 +67,7 @@ const NewSubscription = props => {
           </FormGroup>
           <FormGroup>
             <Button color="info" className="add">
-              Add
+              Save
             </Button>
             <Button
               color="secondary"
@@ -83,4 +83,4 @@ const NewSubscription = props => {
   );
 };
 
-export default NewSubscription;
+export default EditSubscription;

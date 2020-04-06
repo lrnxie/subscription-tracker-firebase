@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import NewSubscription from "./NewSubscription";
+
 import { Navbar, NavbarBrand, Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import NewSubscription from "./NewSubscription";
 
 export const Header = () => {
   const [modal, setModal] = useState(false);

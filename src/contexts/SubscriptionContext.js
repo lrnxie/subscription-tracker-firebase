@@ -20,9 +20,22 @@ export const SubscriptionContextProvider = props => {
     );
   };
 
+  const editSubscription = (id, updatedDetails) => {
+    setSubscription(
+      subscriptions.map(subscription =>
+        subscription.id === id ? updatedDetails : subscription
+      )
+    );
+  };
+
   return (
     <SubscriptionContext.Provider
-      value={{ subscriptions, addSubscription, removeSubscription }}
+      value={{
+        subscriptions,
+        addSubscription,
+        removeSubscription,
+        editSubscription
+      }}
     >
       {props.children}
     </SubscriptionContext.Provider>
