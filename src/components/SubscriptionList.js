@@ -2,14 +2,24 @@ import React, { useContext } from "react";
 import { SubscriptionContext } from "../contexts/SubscriptionContext";
 import SubscriptionDetail from "./SubscriptionDetail";
 
-import { ListGroup } from "reactstrap";
+import { ListGroup, ListGroupItem, Container, Row, Col } from "reactstrap";
 
 const SubscriptionList = () => {
   const { subscriptions } = useContext(SubscriptionContext);
   return subscriptions.length ? (
     <div className="subscription-list">
       <ListGroup>
-        {subscriptions.map(subscription => {
+        <ListGroupItem>
+          <Container>
+            <Row>
+              <Col>Name</Col>
+              <Col>Price</Col>
+              <Col>First bill</Col>
+              <Col>Actions</Col>
+            </Row>
+          </Container>
+        </ListGroupItem>
+        {subscriptions.map((subscription) => {
           return (
             <SubscriptionDetail
               subscription={subscription}

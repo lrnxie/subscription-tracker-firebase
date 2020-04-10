@@ -8,21 +8,23 @@ import {
   Input,
   Modal,
   ModalHeader,
-  ModalBody
+  ModalBody,
 } from "reactstrap";
 
-const NewSubscription = props => {
+const NewSubscription = (props) => {
   const { addSubscription } = useContext(SubscriptionContext);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [cycle, setCycle] = useState("weekly");
+  const [date, setDate] = useState("");
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    addSubscription(name, price, cycle);
+    addSubscription(name, price, cycle, date);
     setName("");
     setPrice("");
     setCycle("weekly");
+    setDate("");
     props.toggle();
   };
 
@@ -38,7 +40,7 @@ const NewSubscription = props => {
               placeholder="Subscription name"
               required
               value={name}
-              onChange={e => setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -50,7 +52,7 @@ const NewSubscription = props => {
               step="0.01"
               required
               value={price}
-              onChange={e => setPrice(+e.target.value)}
+              onChange={(e) => setPrice(+e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -58,12 +60,21 @@ const NewSubscription = props => {
             <Input
               type="select"
               value={cycle}
-              onChange={e => setCycle(e.target.value)}
+              onChange={(e) => setCycle(e.target.value)}
             >
               <option value="weekly">Weekly</option>
               <option value="monthly">Monthly</option>
               <option value="yearly">Yearly</option>
             </Input>
+          </FormGroup>
+          <FormGroup>
+            <Label>First bill on</Label>
+            <Input
+              type="date"
+              value={date}
+              required
+              onChange={(e) => setDate(e.target.value)}
+            />
           </FormGroup>
           <FormGroup>
             <Button color="info" className="add">

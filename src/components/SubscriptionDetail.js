@@ -13,13 +13,30 @@ const SubscriptionDetail = ({ subscription }) => {
 
   const { removeSubscription } = useContext(SubscriptionContext);
 
+  const formatCycle = (cycle) => {
+    switch (cycle) {
+      case "weekly":
+        return "wk";
+      case "monthly":
+        return "mo";
+      case "yearly":
+        return "yr";
+    }
+  };
+
+  const formatDate = (date) => {
+    return date.slice(2).replace(/-/g, "/");
+  };
+
   return (
     <ListGroupItem>
       <Container>
         <Row className="item">
           <Col className="name">{subscription.name}</Col>
-          <Col>{"$ " + subscription.price}</Col>
-          <Col>{subscription.cycle}</Col>
+          <Col>
+            {"$ " + subscription.price} / {formatCycle(subscription.cycle)}
+          </Col>
+          <Col>{formatDate(subscription.date)}</Col>
           <Col className="edit-delete">
             <div>
               <Button color="info" className="edit" onClick={toggle}>

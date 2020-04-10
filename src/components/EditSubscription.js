@@ -9,19 +9,26 @@ import {
   Input,
   Modal,
   ModalHeader,
-  ModalBody
+  ModalBody,
 } from "reactstrap";
 
-const EditSubscription = props => {
+const EditSubscription = (props) => {
   const { editSubscription } = useContext(SubscriptionContext);
   const [name, setName] = useState(props.subscription.name);
   const [price, setPrice] = useState(props.subscription.price);
   const [cycle, setCycle] = useState(props.subscription.cycle);
+  const [date, setDate] = useState(props.subscription.date);
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    const updatedDetails = { id: props.subscription.id, name, price, cycle };
+    const updatedDetails = {
+      id: props.subscription.id,
+      name,
+      price,
+      cycle,
+      date,
+    };
     editSubscription(props.subscription.id, updatedDetails);
     props.toggle();
   };
@@ -38,7 +45,7 @@ const EditSubscription = props => {
               placeholder="Subscription name"
               required
               value={name}
-              onChange={e => setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -50,7 +57,7 @@ const EditSubscription = props => {
               step="0.01"
               required
               value={price}
-              onChange={e => setPrice(+e.target.value)}
+              onChange={(e) => setPrice(+e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -58,12 +65,21 @@ const EditSubscription = props => {
             <Input
               type="select"
               value={cycle}
-              onChange={e => setCycle(e.target.value)}
+              onChange={(e) => setCycle(e.target.value)}
             >
               <option value="weekly">Weekly</option>
               <option value="monthly">Monthly</option>
               <option value="yearly">Yearly</option>
             </Input>
+          </FormGroup>
+          <FormGroup>
+            <Label>First bill on</Label>
+            <Input
+              type="date"
+              value={date}
+              required
+              onChange={(e) => setDate(e.target.value)}
+            />
           </FormGroup>
           <FormGroup>
             <Button color="info" className="add">
