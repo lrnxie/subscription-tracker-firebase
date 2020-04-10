@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { SubscriptionContext } from "../contexts/SubscriptionContext";
 import SubscriptionDetail from "./SubscriptionDetail";
+import Stats from "./Stats";
 
 import { ListGroup, ListGroupItem, Container, Row, Col } from "reactstrap";
 
@@ -27,6 +28,9 @@ const SubscriptionList = () => {
             />
           );
         })}
+        <ListGroupItem>
+          <Stats />
+        </ListGroupItem>
       </ListGroup>
     </div>
   ) : (

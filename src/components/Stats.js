@@ -35,7 +35,7 @@ const Stats = () => {
       <Container>
         <Row>
           <Col>Monthly cost: ${monthly.toFixed(2)}</Col>
-          <Col>Yearly cost: ${yearly}</Col>
+          <Col>Yearly cost: ${yearly.toFixed(2)}</Col>
         </Row>
       </Container>
     </div>

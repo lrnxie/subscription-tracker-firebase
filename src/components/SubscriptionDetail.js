@@ -21,6 +21,8 @@ const SubscriptionDetail = ({ subscription }) => {
         return "mo";
       case "yearly":
         return "yr";
+      default:
+        return "";
     }
   };
 
@@ -34,7 +36,7 @@ const SubscriptionDetail = ({ subscription }) => {
         <Row className="item">
           <Col className="name">{subscription.name}</Col>
           <Col>
-            {"$ " + subscription.price} / {formatCycle(subscription.cycle)}
+            ${subscription.price} / {formatCycle(subscription.cycle)}
           </Col>
           <Col>{formatDate(subscription.date)}</Col>
           <Col className="edit-delete">
