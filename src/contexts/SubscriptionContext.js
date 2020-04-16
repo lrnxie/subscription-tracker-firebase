@@ -1,10 +1,10 @@
-import React, { createContext, useState } from "react";
-import { v1 as uuidv1 } from "uuid";
+import React, { createContext, useReducer } from "react";
+import { subscriptionReducer } from "../reducers/subscriptionReducer";
 
 export const SubscriptionContext = createContext();
 
 export const SubscriptionContextProvider = (props) => {
-  const [subscriptions, setSubscription] = useState([
+  const initState = [
     {
       id: 1,
       name: "Netflix",
@@ -26,38 +26,12 @@ export const SubscriptionContextProvider = (props) => {
       cycle: "yearly",
       date: "2020-07-29",
     },
-  ]);
+  ];
 
-  const addSubscription = (name, price, cycle, date) => {
-    setSubscription([
-      ...subscriptions,
-      { id: uuidv1(), name, price, cycle, date },
-    ]);
-  };
-
-  const removeSubscription = (id) => {
-    setSubscription(
-      subscriptions.filter((subscription) => subscription.id !== id)
-    );
-  };
-
-  const editSubscription = (id, updatedDetails) => {
-    setSubscription(
-      subscriptions.map((subscription) =>
-        subscription.id === id ? updatedDetails : subscription
-      )
-    );
-  };
+  const [subscriptions, dispatch] = useReducer(subscriptionReducer, initState);
 
   return (
-    <SubscriptionContext.Provider
-      value={{
-        subscriptions,
-        addSubscription,
-        removeSubscription,
-        editSubscription,
-      }}
-    >
+    <SubscriptionContext.Provider value={{ subscriptions, dispatch }}>
       {props.children}
     </SubscriptionContext.Provider>
   );

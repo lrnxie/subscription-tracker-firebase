@@ -12,7 +12,7 @@ import {
 } from "reactstrap";
 
 const NewSubscription = (props) => {
-  const { addSubscription } = useContext(SubscriptionContext);
+  const { dispatch } = useContext(SubscriptionContext);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [cycle, setCycle] = useState("weekly");
@@ -20,7 +20,10 @@ const NewSubscription = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addSubscription(name, price, cycle, date);
+    dispatch({
+      type: "ADD_SUBSCRIPTION",
+      subscription: { name, price, cycle, date },
+    });
     setName("");
     setPrice("");
     setCycle("weekly");

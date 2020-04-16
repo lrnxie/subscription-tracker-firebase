@@ -11,7 +11,7 @@ const SubscriptionDetail = ({ subscription }) => {
 
   const toggle = () => setModal(!modal);
 
-  const { removeSubscription } = useContext(SubscriptionContext);
+  const { dispatch } = useContext(SubscriptionContext);
 
   const formatCycle = (cycle) => {
     switch (cycle) {
@@ -53,7 +53,9 @@ const SubscriptionDetail = ({ subscription }) => {
             <Button
               color="info"
               className="delete"
-              onClick={() => removeSubscription(subscription.id)}
+              onClick={() =>
+                dispatch({ type: "REMOVE_SUBSCRIPTION", id: subscription.id })
+              }
             >
               <FontAwesomeIcon icon={faTrashAlt} />
             </Button>

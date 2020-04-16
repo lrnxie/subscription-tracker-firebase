@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 
 const EditSubscription = (props) => {
-  const { editSubscription } = useContext(SubscriptionContext);
+  const { dispatch } = useContext(SubscriptionContext);
   const [name, setName] = useState(props.subscription.name);
   const [price, setPrice] = useState(props.subscription.price);
   const [cycle, setCycle] = useState(props.subscription.cycle);
@@ -22,14 +22,18 @@ const EditSubscription = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const updatedDetails = {
+    const updatedSubscription = {
       id: props.subscription.id,
       name,
       price,
       cycle,
       date,
     };
-    editSubscription(props.subscription.id, updatedDetails);
+
+    dispatch({
+      type: "EDIT_SUBSCRIPTION",
+      subscription: { id: props.subscription.id, updatedSubscription },
+    });
     props.toggle();
   };
 
