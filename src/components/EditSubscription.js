@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { SubscriptionContext } from "../contexts/SubscriptionContext";
+import React, { useState } from "react";
+import { db } from "../config/firebase";
 
 import {
   Button,
@@ -13,7 +13,6 @@ import {
 } from "reactstrap";
 
 const EditSubscription = (props) => {
-  const { dispatch } = useContext(SubscriptionContext);
   const [name, setName] = useState(props.subscription.name);
   const [price, setPrice] = useState(props.subscription.price);
   const [cycle, setCycle] = useState(props.subscription.cycle);
@@ -23,17 +22,16 @@ const EditSubscription = (props) => {
     e.preventDefault();
 
     const updatedSubscription = {
-      id: props.subscription.id,
       name,
       price,
       cycle,
       date,
     };
 
-    dispatch({
-      type: "EDIT_SUBSCRIPTION",
-      subscription: { id: props.subscription.id, updatedSubscription },
-    });
+    db.collection("subscriptions")
+      .doc(props.subscription.id)
+      .update(updatedSubscription);
+
     props.toggle();
   };
 

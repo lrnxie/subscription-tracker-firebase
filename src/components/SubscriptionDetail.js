@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { SubscriptionContext } from "../contexts/SubscriptionContext";
+import React, { useState } from "react";
+import { db } from "../config/firebase";
 import EditSubscription from "./EditSubscription";
 
 import { ListGroupItem, Container, Row, Col, Button } from "reactstrap";
@@ -10,8 +10,6 @@ const SubscriptionDetail = ({ subscription }) => {
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
-
-  const { dispatch } = useContext(SubscriptionContext);
 
   const formatCycle = (cycle) => {
     switch (cycle) {
@@ -28,6 +26,10 @@ const SubscriptionDetail = ({ subscription }) => {
 
   const formatDate = (date) => {
     return date.slice(2).replace(/-/g, "/");
+  };
+
+  const handleDelete = (id) => {
+    db.collection("subscriptions").doc(id).delete();
   };
 
   return (
@@ -53,9 +55,7 @@ const SubscriptionDetail = ({ subscription }) => {
             <Button
               color="info"
               className="delete"
-              onClick={() =>
-                dispatch({ type: "REMOVE_SUBSCRIPTION", id: subscription.id })
-              }
+              onClick={() => handleDelete(subscription.id)}
             >
               <FontAwesomeIcon icon={faTrashAlt} />
             </Button>

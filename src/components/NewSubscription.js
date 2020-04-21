@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { SubscriptionContext } from "../contexts/SubscriptionContext";
+import React, { useState } from "react";
+import { db } from "../config/firebase";
 import {
   Button,
   Form,
@@ -12,7 +12,6 @@ import {
 } from "reactstrap";
 
 const NewSubscription = (props) => {
-  const { dispatch } = useContext(SubscriptionContext);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [cycle, setCycle] = useState("weekly");
@@ -20,14 +19,21 @@ const NewSubscription = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch({
-      type: "ADD_SUBSCRIPTION",
-      subscription: { name, price, cycle, date },
+    // add to database
+    db.collection("subscriptions").add({
+      name,
+      price,
+      cycle,
+      date,
     });
+
+    // reset form
     setName("");
     setPrice("");
     setCycle("weekly");
     setDate("");
+
+    // close modal
     props.toggle();
   };
 

@@ -1,12 +1,26 @@
-import React, { useContext } from "react";
-import { SubscriptionContext } from "../contexts/SubscriptionContext";
+import React, { useState, useEffect } from "react";
+import { db } from "../config/firebase";
 import SubscriptionDetail from "./SubscriptionDetail";
 import Stats from "./Stats";
 
 import { ListGroup, ListGroupItem, Container, Row, Col } from "reactstrap";
 
 const SubscriptionList = () => {
-  const { subscriptions } = useContext(SubscriptionContext);
+  const [subscriptions, setSubscription] = useState([]);
+
+  useEffect(() => {
+    const dbUnsubscribe = db
+      .collection("subscriptions")
+      .onSnapshot((snapshot) => {
+        const dbSubscriptions = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setSubscription(dbSubscriptions);
+      });
+    return () => dbUnsubscribe();
+  }, []);
+
   return subscriptions.length ? (
     <div className="subscription-list">
       <ListGroup>
@@ -29,7 +43,7 @@ const SubscriptionList = () => {
           );
         })}
         <ListGroupItem>
-          <Stats />
+          <Stats subscriptions={subscriptions} />
         </ListGroupItem>
       </ListGroup>
     </div>

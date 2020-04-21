@@ -1,11 +1,8 @@
-import React, { useContext } from "react";
-import { SubscriptionContext } from "../contexts/SubscriptionContext";
+import React from "react";
 
 import { Container, Row, Col } from "reactstrap";
 
-const Stats = () => {
-  const { subscriptions } = useContext(SubscriptionContext);
-
+const Stats = ({ subscriptions }) => {
   const monthly = subscriptions
     .map((subscription) => {
       if (subscription.cycle === "weekly") {
