@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { FirestoreContext } from "../contexts/FirestoreContext";
+import { FirestoreContext } from "../../contexts/FirestoreContext";
 import EditSubscription from "./EditSubscription";
 
 import { ListGroupItem, Container, Row, Col, Button } from "reactstrap";

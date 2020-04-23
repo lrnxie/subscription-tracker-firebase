@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
-import { FirestoreContext } from "../contexts/FirestoreContext";
+import { FirestoreContext } from "../../contexts/FirestoreContext";
 import SubscriptionDetail from "./SubscriptionDetail";
 import Stats from "./Stats";
 
 import { ListGroup, ListGroupItem, Container, Row, Col } from "reactstrap";
 
 const SubscriptionList = () => {
-  const { loading, subscriptions } = useContext(FirestoreContext);
+  const { dbLoading, subscriptions } = useContext(FirestoreContext);
 
-  return loading ? (
+  return dbLoading ? (
     <div className="info-text">Loading...</div>
   ) : subscriptions.length ? (
     <div className="subscription-list">
