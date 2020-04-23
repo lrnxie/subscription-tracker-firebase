@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { db } from "../config/firebase";
+import React, { useContext, useState } from "react";
+import { FirestoreContext } from "../contexts/FirestoreContext";
 
 import {
   Button,
@@ -13,6 +13,8 @@ import {
 } from "reactstrap";
 
 const EditSubscription = (props) => {
+  const { editSubscription } = useContext(FirestoreContext);
+
   const [name, setName] = useState(props.subscription.name);
   const [price, setPrice] = useState(props.subscription.price);
   const [cycle, setCycle] = useState(props.subscription.cycle);
@@ -20,18 +22,13 @@ const EditSubscription = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const updatedSubscription = {
       name,
       price,
       cycle,
       date,
     };
-
-    db.collection("subscriptions")
-      .doc(props.subscription.id)
-      .update(updatedSubscription);
-
+    editSubscription(props.subscription.id, updatedSubscription);
     props.toggle();
   };
 

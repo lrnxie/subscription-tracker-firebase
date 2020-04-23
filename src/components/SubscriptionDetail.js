@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { db } from "../config/firebase";
+import React, { useContext, useState } from "react";
+import { FirestoreContext } from "../contexts/FirestoreContext";
 import EditSubscription from "./EditSubscription";
 
 import { ListGroupItem, Container, Row, Col, Button } from "reactstrap";
@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 const SubscriptionDetail = ({ subscription }) => {
+  const { deleteSubscription } = useContext(FirestoreContext);
+
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
@@ -26,10 +28,6 @@ const SubscriptionDetail = ({ subscription }) => {
 
   const formatDate = (date) => {
     return date.slice(2).replace(/-/g, "/");
-  };
-
-  const handleDelete = (id) => {
-    db.collection("subscriptions").doc(id).delete();
   };
 
   return (
@@ -55,7 +53,7 @@ const SubscriptionDetail = ({ subscription }) => {
             <Button
               color="info"
               className="delete"
-              onClick={() => handleDelete(subscription.id)}
+              onClick={() => deleteSubscription(subscription.id)}
             >
               <FontAwesomeIcon icon={faTrashAlt} />
             </Button>

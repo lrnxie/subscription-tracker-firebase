@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { db } from "../config/firebase";
+import React, { useContext, useState } from "react";
+import { FirestoreContext } from "../contexts/FirestoreContext";
+
 import {
   Button,
   Form,
@@ -12,6 +13,8 @@ import {
 } from "reactstrap";
 
 const NewSubscription = (props) => {
+  const { addSubscription } = useContext(FirestoreContext);
+
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [cycle, setCycle] = useState("weekly");
@@ -20,19 +23,12 @@ const NewSubscription = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // add to database
-    db.collection("subscriptions").add({
-      name,
-      price,
-      cycle,
-      date,
-    });
-
+    addSubscription(name, price, cycle, date);
     // reset form
     setName("");
     setPrice("");
     setCycle("weekly");
     setDate("");
-
     // close modal
     props.toggle();
   };

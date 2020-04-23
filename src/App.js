@@ -1,13 +1,14 @@
 import React from "react";
+import { FirestoreContextProvider } from "./contexts/FirestoreContext";
 import { Header } from "./components/Header";
 import SubscriptionList from "./components/SubscriptionList";
 
 function App() {
   return (
-    <div>
+    <FirestoreContextProvider>
       <Header />
       <SubscriptionList />
-    </div>
+    </FirestoreContextProvider>
   );
 }
 

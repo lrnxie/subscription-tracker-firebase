@@ -1,27 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { db } from "../config/firebase";
+import React, { useContext } from "react";
+import { FirestoreContext } from "../contexts/FirestoreContext";
 import SubscriptionDetail from "./SubscriptionDetail";
 import Stats from "./Stats";
 
 import { ListGroup, ListGroupItem, Container, Row, Col } from "reactstrap";
 
 const SubscriptionList = () => {
-  const [subscriptions, setSubscription] = useState([]);
+  const { loading, subscriptions } = useContext(FirestoreContext);
 
-  useEffect(() => {
-    const dbUnsubscribe = db
-      .collection("subscriptions")
-      .onSnapshot((snapshot) => {
-        const dbSubscriptions = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setSubscription(dbSubscriptions);
-      });
-    return () => dbUnsubscribe();
-  }, []);
-
-  return subscriptions.length ? (
+  return loading ? (
+    <div className="info-text">Loading...</div>
+  ) : subscriptions.length ? (
     <div className="subscription-list">
       <ListGroup>
         <ListGroupItem>
@@ -48,7 +37,9 @@ const SubscriptionList = () => {
       </ListGroup>
     </div>
   ) : (
-    <div className="no-subs">No subscriptions. Add one to start tracking!</div>
+    <div className="info-text">
+      No subscriptions. Add one to start tracking!
+    </div>
   );
 };
 
