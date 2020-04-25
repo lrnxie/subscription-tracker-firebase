@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import moment from "moment";
 import { FirestoreContext } from "../../contexts/FirestoreContext";
 import EditSubscription from "./EditSubscription";
 
@@ -26,8 +27,30 @@ const SubscriptionDetail = ({ subscription }) => {
     }
   };
 
-  const formatDate = (date) => {
-    return date.slice(2).replace(/-/g, "/");
+  const nextBill = (cycle, date) => {
+    let nextDate;
+
+    if (cycle === "yearly") {
+      const diff = moment().diff(date, "years", true);
+      nextDate =
+        diff > 0
+          ? moment(date).add(Math.round(diff) + 1, "year")
+          : moment(date);
+    } else if (cycle === "monthly") {
+      const diff = moment().diff(date, "months", true);
+      nextDate =
+        diff > 0
+          ? moment(date).add(Math.round(diff) + 1, "month")
+          : moment(date);
+    } else {
+      const diff = moment().diff(date, "weeks", true);
+      nextDate =
+        diff > 0
+          ? moment(date).add(Math.round(diff) + 1, "week")
+          : moment(date);
+    }
+
+    return nextDate.format("MMM DD, YYYY");
   };
 
   return (
@@ -38,7 +61,7 @@ const SubscriptionDetail = ({ subscription }) => {
           <Col>
             ${subscription.price} / {formatCycle(subscription.cycle)}
           </Col>
-          <Col>{formatDate(subscription.date)}</Col>
+          <Col>{nextBill(subscription.cycle, subscription.date)}</Col>
           <Col className="edit-delete">
             <div>
               <Button color="info" className="edit" onClick={toggle}>

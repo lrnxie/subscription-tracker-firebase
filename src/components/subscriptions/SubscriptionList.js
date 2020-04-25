@@ -18,7 +18,7 @@ const SubscriptionList = () => {
             <Row>
               <Col>Name</Col>
               <Col>Price</Col>
-              <Col>First bill</Col>
+              <Col>Next bill</Col>
               <Col>Actions</Col>
             </Row>
           </Container>

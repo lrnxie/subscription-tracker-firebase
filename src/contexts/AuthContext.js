@@ -11,9 +11,10 @@ export const AuthContextProvider = (props) => {
   useEffect(() => {
     const unsbuscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        console.log(user.email);
         setAuthStatus(true);
         setUser({ id: user.uid, email: user.email });
+        setAuthLoading(false);
+      } else {
         setAuthLoading(false);
       }
     });
