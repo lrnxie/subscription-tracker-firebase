@@ -4,15 +4,15 @@ import { auth, db } from "../config/firebase";
 export const AuthContext = createContext();
 
 export const AuthContextProvider = (props) => {
+  const [user, setUser] = useState(null);
   const [authStatus, setAuthStatus] = useState(null);
-  const [user, setUser] = useState({ id: "", email: "" });
   const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
     const unsbuscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        setAuthStatus(true);
         setUser({ id: user.uid, email: user.email });
+        setAuthStatus(true);
         setAuthLoading(false);
       } else {
         setAuthLoading(false);
@@ -26,15 +26,19 @@ export const AuthContextProvider = (props) => {
   const signIn = (email, password) => {
     auth
       .signInWithEmailAndPassword(email, password)
-      .then(() => {
+      .then((res) => {
+        setUser({ id: res.user.uid, email: res.user.email });
         setAuthStatus(true);
+        setAuthLoading(false);
       })
       .catch((err) => console.log(err));
   };
 
   const signOut = () => {
     auth.signOut().then(() => {
+      setUser(null);
       setAuthStatus(null);
+      setAuthLoading(false);
     });
   };
 

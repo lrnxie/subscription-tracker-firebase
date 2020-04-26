@@ -11,7 +11,7 @@ export const FirestoreContextProvider = (props) => {
   const [dbLoading, setDbLoading] = useState(true);
 
   useEffect(() => {
-    if (user.email) {
+    if (user) {
       const unsubscribe = db.collection(user.email).onSnapshot((snapshot) => {
         const userSubscriptions = snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -23,6 +23,8 @@ export const FirestoreContextProvider = (props) => {
       return () => {
         unsubscribe();
       };
+    } else {
+      setSubscriptions([]);
     }
   }, [user]);
 

@@ -34,19 +34,19 @@ const SubscriptionDetail = ({ subscription }) => {
       const diff = moment().diff(date, "years", true);
       nextDate =
         diff > 0
-          ? moment(date).add(Math.round(diff) + 1, "year")
+          ? moment(date).add(Math.floor(diff) + 1, "year")
           : moment(date);
     } else if (cycle === "monthly") {
       const diff = moment().diff(date, "months", true);
       nextDate =
         diff > 0
-          ? moment(date).add(Math.round(diff) + 1, "month")
+          ? moment(date).add(Math.floor(diff) + 1, "month")
           : moment(date);
     } else {
       const diff = moment().diff(date, "weeks", true);
       nextDate =
         diff > 0
-          ? moment(date).add(Math.round(diff) + 1, "week")
+          ? moment(date).add(Math.floor(diff) + 1, "week")
           : moment(date);
     }
 
