@@ -7,6 +7,7 @@ export const AuthContextProvider = (props) => {
   const [user, setUser] = useState(null);
   const [authStatus, setAuthStatus] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
+  const [authAlert, setAuthAlert] = useState(null);
 
   useEffect(() => {
     const unsbuscribe = auth.onAuthStateChanged((user) => {
@@ -30,8 +31,13 @@ export const AuthContextProvider = (props) => {
         setUser({ id: res.user.uid, email: res.user.email });
         setAuthStatus(true);
         setAuthLoading(false);
+        setAuthAlert({ type: "info", msg: "Welcome back!" });
+        clearAlert(3000);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setAuthAlert({ type: "danger", msg: err.message });
+        clearAlert(5000);
+      });
   };
 
   const signOut = () => {
@@ -39,6 +45,7 @@ export const AuthContextProvider = (props) => {
       setUser(null);
       setAuthStatus(null);
       setAuthLoading(false);
+      setAuthAlert(null);
     });
   };
 
@@ -47,13 +54,32 @@ export const AuthContextProvider = (props) => {
       .createUserWithEmailAndPassword(email, password)
       .then((res) => {
         db.collection("users").doc(res.user.uid).set({ email: res.user.email });
+        setAuthAlert({ type: "success", msg: "Sign up succeeded. Welcome!" });
+        clearAlert(3000);
       })
-      .catch((err) => console.log(err.message));
+      .catch((err) => {
+        setAuthAlert({ type: "danger", msg: err.message });
+        clearAlert(5000);
+      });
+  };
+
+  const clearAlert = (time) => {
+    setTimeout(() => {
+      setAuthAlert(null);
+    }, time);
   };
 
   return (
     <AuthContext.Provider
-      value={{ authStatus, user, authLoading, signIn, signOut, signUp }}
+      value={{
+        authStatus,
+        user,
+        authLoading,
+        authAlert,
+        signIn,
+        signOut,
+        signUp,
+      }}
     >
       {props.children}
     </AuthContext.Provider>

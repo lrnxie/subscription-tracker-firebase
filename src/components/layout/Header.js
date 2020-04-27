@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthContext";
-import NewSubscription from "./subscriptions/NewSubscription";
+import { AuthContext } from "../../contexts/AuthContext";
+import NewSubscription from "../subscriptions/NewSubscription";
 
 import {
   Navbar,
