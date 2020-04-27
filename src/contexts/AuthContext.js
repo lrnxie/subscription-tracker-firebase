@@ -5,7 +5,6 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = (props) => {
   const [user, setUser] = useState(null);
-  const [authStatus, setAuthStatus] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
   const [authAlert, setAuthAlert] = useState(null);
 
@@ -13,7 +12,6 @@ export const AuthContextProvider = (props) => {
     const unsbuscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setUser({ id: user.uid, email: user.email });
-        setAuthStatus(true);
         setAuthLoading(false);
       } else {
         setAuthLoading(false);
@@ -29,7 +27,6 @@ export const AuthContextProvider = (props) => {
       .signInWithEmailAndPassword(email, password)
       .then((res) => {
         setUser({ id: res.user.uid, email: res.user.email });
-        setAuthStatus(true);
         setAuthLoading(false);
         setAuthAlert({ type: "info", msg: "Welcome back!" });
         clearAlert(3000);
@@ -43,7 +40,6 @@ export const AuthContextProvider = (props) => {
   const signOut = () => {
     auth.signOut().then(() => {
       setUser(null);
-      setAuthStatus(null);
       setAuthLoading(false);
       setAuthAlert(null);
     });
@@ -72,7 +68,6 @@ export const AuthContextProvider = (props) => {
   return (
     <AuthContext.Provider
       value={{
-        authStatus,
         user,
         authLoading,
         authAlert,

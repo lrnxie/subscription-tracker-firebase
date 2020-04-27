@@ -15,13 +15,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export const Header = () => {
-  const { authStatus, authLoading, signOut } = useContext(AuthContext);
+  const { user, authLoading, signOut } = useContext(AuthContext);
 
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
 
-  const links = authStatus ? (
+  const links = user ? (
     <Nav>
       <NavItem>
         <NavbarText className="mr-3">

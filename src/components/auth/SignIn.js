@@ -4,13 +4,13 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 
 const SignIn = (props) => {
-  const { authStatus, signIn } = useContext(AuthContext);
+  const { user, signIn } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    if (authStatus) {
+    if (user) {
       props.history.push("/");
     }
   });
