@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { AuthContextProvider } from "./contexts/AuthContext";
 import { FirestoreContextProvider } from "./contexts/FirestoreContext";
 import PrivateRoute from "./components/PrivateRoute";
@@ -18,8 +18,9 @@ function App() {
           <Alerts />
           <Switch>
             <PrivateRoute exact path="/" component={SubscriptionList} />
-            <Route path="/signin" component={SignIn} />
-            <Route path="/signup" component={SignUp} />
+            <Route exact path="/signin" component={SignIn} />
+            <Route exact path="/signup" component={SignUp} />
+            <Redirect from="*" to="/" />
           </Switch>
         </BrowserRouter>
       </FirestoreContextProvider>

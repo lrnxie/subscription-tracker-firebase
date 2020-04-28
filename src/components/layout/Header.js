@@ -55,7 +55,9 @@ export const Header = () => {
   return (
     <div>
       <Navbar>
-        <NavbarBrand className="title">Subscriptions Tracker</NavbarBrand>
+        <NavbarBrand href="/" className="title">
+          Subscriptions Tracker
+        </NavbarBrand>
         {authLoading ? "" : links}
       </Navbar>
     </div>
